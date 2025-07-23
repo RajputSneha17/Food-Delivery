@@ -1,0 +1,102 @@
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-dropdown img {
+  transition: transform 0.2s ease;
+}
+
+.profile-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 80%; /* Changed from 120% to 95% */
+  right: 0;
+  min-width: 160px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.profile-dropdown:hover .profile-dropdown-menu {
+  display: block;
+}
+
+.profile-dropdown-menu button {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-dropdown-menu button i {
+  font-size: 16px;
+  color: #ec407a;
+}
+
+.profile-dropdown-menu button:hover {
+  background-color: #fff0f5;
+  color: #ec407a;
+}
+
+.text-pink {
+  color: #ec407a !important;
+}
+
+.navbar {
+  overflow: visible !important;
+}
+
+.profile-dropdown-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile-dropdown-sidebar img {
+  transition: transform 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.profile-dropdown-sidebar .profile-dropdown-menu {
+  display: block;
+  position: static; /* No absolute needed in sidebar */
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.profile-dropdown-sidebar .profile-dropdown-menu button {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-dropdown-sidebar .profile-dropdown-menu button i {
+  font-size: 16px;
+  color: #ec407a;
+}
+
+.profile-dropdown-sidebar .profile-dropdown-menu button:hover {
+  background-color: #fff0f5;
+  color: #ec407a;
+}

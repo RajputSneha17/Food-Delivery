@@ -1,0 +1,36 @@
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.app {
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+/* For large screens (≥ 992px) */
+@media (min-width: 992px) {
+  .app {
+    width: 90%;
+    max-width: 1200px;
+  }
+}
+
+.app > * {
+  min-width: 100%;
+  overflow: hidden;
+}
+
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
