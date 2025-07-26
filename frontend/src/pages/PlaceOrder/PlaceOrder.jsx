@@ -5,8 +5,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount, token, food_list, cartItems, url, user } =
-    useContext(StoreContext);
+  const {
+    getTotalCartAmount,
+    token,
+    food_list,
+    cartItems,
+    url,
+    user,
+    clearCart,
+  } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -49,10 +56,6 @@ const PlaceOrder = () => {
 
     try {
       // First save order to your DB if needed
-      await axios.post(`${url}/api/order/place`, orderData, {
-        headers: { token },
-      });
-
       // Then create Razorpay order
       const razorpayRes = await axios.post(`${url}/api/order/create-order`, {
         amount,
@@ -66,15 +69,16 @@ const PlaceOrder = () => {
         description: "Food Order Payment",
         order_id: razorpayRes.data.id,
         handler: async function (response) {
-          // Verify payment
           const verifyRes = await axios.post(`${url}/api/order/verify`, {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+            orderData, 
           });
 
           if (verifyRes.data.success) {
             alert("Payment Successful!");
+            clearCart();
             navigate("/myorders");
           } else {
             alert("Payment Verification Failed!");

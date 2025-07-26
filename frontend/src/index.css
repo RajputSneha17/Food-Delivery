@@ -34,3 +34,12 @@ html {
   scroll-behavior: smooth;
 }
 
+a{
+  text-decoration: none;
+  color: grey;
+}
+
+.trackOrderButton:hover{
+  background-color: tomato;
+  color: white !important;
+}

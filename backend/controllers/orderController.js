@@ -2,7 +2,7 @@ import Razorpay from "razorpay";
 import crypto from "crypto";
 import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
-
+import orderModel from "../models/orderModel.js";
 
 // Razorpay instance
 const razorpay = new Razorpay({
@@ -15,7 +15,7 @@ export const createOrder = async (req, res) => {
   const { amount } = req.body;
 
   const options = {
-    amount: amount * 100, // in paisa
+    amount: amount * 100,
     currency: "INR",
     receipt: "receipt_" + Date.now(),
   };
@@ -30,9 +30,13 @@ export const createOrder = async (req, res) => {
 };
 
 // 🔹 Verify Razorpay payment
-export const verifyPayment = (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-    req.body;
+export const verifyPayment = async (req, res) => {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    orderData, // Contains userId, items, address, amount
+  } = req.body;
 
   const sign = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
@@ -41,9 +45,33 @@ export const verifyPayment = (req, res) => {
     .digest("hex");
 
   if (expectedSignature === razorpay_signature) {
-    res.status(200).json({ success: true, message: "Payment Verified" });
+    try {
+      const newOrder = new Order({
+        ...orderData,
+        payment: true,
+        razorpay_order_id,
+        razorpay_payment_id,
+      });
+
+      await newOrder.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Payment verified and order saved!",
+        orderId: newOrder._id,
+      });
+    } catch (err) {
+      console.error("DB Save Failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Payment verified but failed to save order.",
+      });
+    }
   } else {
-    res.status(400).json({ success: false, message: "Invalid Signature" });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid signature. Payment verification failed.",
+    });
   }
 };
 
@@ -73,6 +101,50 @@ export const placeOrder = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to place order",
+    });
+  }
+};
+
+//user orders for frontend
+
+export const userOrder = async (req, res) => {
+  try {
+    const orders = await orderModel.find({ userId: req.userId });
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Failed to access order",
+    });
+  }
+};
+
+export const allOrder = async (req, res) => {
+  try {
+    const allOrders = await orderModel.find({});
+    res.json({ success: true, data: allOrders });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Failed to access order",
+    });
+  }
+};
+
+//api for updating order status
+export const updateStatus = async (req, res) => {
+  try {
+    await orderModel.findByIdAndUpdate(req.body.orderId, {
+      status: req.body.status,
+    });
+    res.json({ success: true, message: "Status Update" });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Error",
     });
   }
 };

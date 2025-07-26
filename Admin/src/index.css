@@ -29,3 +29,19 @@ hr {
   background-color: #fff0ed !important;
   border-color: tomato !important;
 }
+
+.custom-select-pink {
+  background-color: #fbeaea;
+  border: 1px solid #e4bfbf;
+  border-radius: 6px;
+  padding: 4px 8px;
+  height: 30px;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.custom-select-pink:focus {
+  border-color: #d19c9c;
+  box-shadow: 0 0 0 0.2rem rgba(255, 192, 203, 0.25);
+}

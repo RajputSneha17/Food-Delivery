@@ -81,14 +81,14 @@ const Navbar = ({ setShowLogin }) => {
     localStorage.removeItem("token");
     setToken("");
     navigate("/");
-  }
+  };
 
   return (
     <>
-      <nav className="navbar navbar-expand-md bg-white fixed-top shadow-sm p-2 p-md-3">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-md bg-white fixed-top shadow-sm p-2 p-md-3 px-lg-5">
+        <div className="container-fluid px-5">
           <div
-            className="navbar-brand"
+            className="navbar-brand px-lg-5"
             onClick={() => handleNav("home")}
             style={{ cursor: "pointer" }}
           >
@@ -107,7 +107,7 @@ const Navbar = ({ setShowLogin }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse">
+          <div className="collapse navbar-collapse px-lg-5">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               {[
                 ["home", "Home"],
@@ -121,12 +121,12 @@ const Navbar = ({ setShowLogin }) => {
               ))}
             </ul>
 
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center gap-3 px-lg-5">
               <div className="position-relative">
-                <Link to="/cart" className="btn  p-2" style={{borderColor: "tomato"}}>
+                <Link to="/cart" className="  p-3">
                   <img src={assets.basket_icon} alt="cart" width="20" />
                   {getTotalCartAmount() > 0 && (
-                    <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" />
+                    <span className="position-absolute  translate-middle p-1 bg-danger border border-light rounded-circle" />
                   )}
                 </Link>
               </div>
@@ -134,7 +134,9 @@ const Navbar = ({ setShowLogin }) => {
               {!token ? (
                 <button
                   className="btn btn-danger px-3 py-2"
-                  onClick={() => setShowLogin(true)}
+                 onClick={() => {
+                  setShowLogin(true);
+                    navigate("/", {state: { scrollTo: "home", loginPopup: true }});}}
                 >
                   Login
                 </button>
@@ -147,10 +149,15 @@ const Navbar = ({ setShowLogin }) => {
                     style={{ width: "35px", height: "35px", cursor: "pointer" }}
                   />
                   <div className="profile-dropdown-menu bg-white shadow-sm rounded mt-2">
-                    <button className="dropdown-item text-secondary d-flex align-items-center gap-2">
-                      <i className="fas fa-box text-pink"></i> Orders
-                    </button>
-                    <button onClick={logout} className="dropdown-item text-secondary d-flex align-items-center gap-2">
+                    <Link to="/myOrders">
+                      <button className="dropdown-item text-secondary d-flex align-items-center gap-2">
+                        <i className="fas fa-box text-pink"></i> Orders
+                      </button>
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="dropdown-item text-secondary d-flex align-items-center gap-2"
+                    >
                       <i className="fas fa-sign-out-alt text-pink"></i> Logout
                     </button>
                   </div>
@@ -188,22 +195,26 @@ const Navbar = ({ setShowLogin }) => {
           <div className="d-flex gap-3 mt-4">
             <Link
               to="/cart"
-              className="  btn d-flex align-items-center justify-content-center p-2"
+              className="btn d-flex align-items-center justify-content-center p-2 position-relative"
               style={{ width: "40px", height: "40px", borderColor: "tomato" }}
             >
-              <img src={assets.basket_icon} alt="cart" width="20" />
+              <img
+                src={assets.basket_icon}
+                alt="cart"
+                width="20"
+                onClick={() => setShowSidebar(false)}
+              />
               {getTotalCartAmount() > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle p-1  border border-light rounded-circle" />
+                <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" />
               )}
             </Link>
-
             {!token ? (
               <button
                 className="btn btn-danger"
                 onClick={() => {
                   setShowLogin(true);
                   setShowSidebar(false);
-                }}
+                    navigate("/", {state: { scrollTo: "home", loginPopup: true }});}}
               >
                 Login
               </button>
@@ -219,10 +230,18 @@ const Navbar = ({ setShowLogin }) => {
 
                 {showProfileDropdown && (
                   <div className="profile-dropdown-menu bg-white shadow-sm rounded mt-2">
-                    <button className="dropdown-item text-secondary d-flex align-items-center gap-2">
-                      <i className="fas fa-box text-pink"></i> Orders
-                    </button>
-                    <button onClick={logout} className="dropdown-item text-secondary d-flex align-items-center gap-2">
+                    <Link to="/myOrders">
+                      <button
+                        className="dropdown-item text-secondary d-flex align-items-center gap-2"
+                        onClick={() => setShowSidebar(false)}
+                      >
+                        <i className="fas fa-box text-pink"></i> Orders{" "}
+                      </button>
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="dropdown-item text-secondary d-flex align-items-center gap-2"
+                    >
                       <i className="fas fa-sign-out-alt text-pink"></i> Logout
                     </button>
                   </div>

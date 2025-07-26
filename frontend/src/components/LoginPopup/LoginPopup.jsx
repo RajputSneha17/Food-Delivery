@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { url, setToken } = useContext(StoreContext);
+  const { url, setToken, setUser, user } = useContext(StoreContext);
 
   const [currState, setCurrState] = useState("Login");
   const [data, setData] = useState({
@@ -32,13 +32,24 @@ const LoginPopup = ({ setShowLogin }) => {
     const response = await axios.post(newUrl, data);
 
     if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
+      const userData = response.data.user;
+      const tokenData = response.data.token;
+
+      localStorage.setItem("token", tokenData);
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      setToken(tokenData);
+      setUser(userData);
+
       setShowLogin(false);
     } else {
       alert(response.data.message);
     }
   };
+
+  useEffect(() => {
+  console.log("Updated user:", user);
+}, [user]);
 
   return (
     <div className="login-popup">
