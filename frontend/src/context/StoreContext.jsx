@@ -92,7 +92,6 @@ export const StoreContextProvider = ({ children }) => {
   }
 };
 
-
   const contextValue = {
     food_list,
     cartItems,
