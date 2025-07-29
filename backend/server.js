@@ -7,7 +7,18 @@ import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import dotenv from "dotenv";
+import cron from 'node-cron';
+import axios from 'axios';
 dotenv.config();
+
+cron.schedule('*/10 * * * *', async () => { 
+  try {
+    await axios.get('https://food-delivery-5nzz.onrender.com'); 
+    console.log('server start again');
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+});
 
 //add config
 const app = express();
