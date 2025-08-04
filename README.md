@@ -8,7 +8,7 @@ A complete **food ordering web application** built with the **MERN stack** (Mong
 
 - 🧑‍🍳 [Frontend – Live Demo](https://food-delivery-ten-mocha.vercel.app/)  
 - 🛠️ [Admin Panel – Live Demo](https://food-delivery-gz9p.vercel.app/)  
-- 💻 [Backend - Live Demo ](https://find-hotels-o82u.onrender.com/)
+- 💻 [Backend - Live Demo ](https://food-delivery-5nzz.onrender.com/)
 
 ---
 
