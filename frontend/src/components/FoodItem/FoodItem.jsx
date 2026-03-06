@@ -15,16 +15,15 @@ const FoodItem = ({ id, name, price, description, image }) => {
           src={url + "/images/" + image}
           alt=""
         />
+
         {!token ? (
-          <>
-            <img
-              className="add"
-              onClick={() => alert("Login required to add this item!")}
-              src={assets.add_icon_white}
-              alt=""
-            />
-          </>
-        ) : !cartItems[id] ? (
+          <img
+            className="add"
+            onClick={() => alert("Login required to add this item!")}
+            src={assets.add_icon_white}
+            alt=""
+          />
+        ) : !cartItems?.[id] ? (
           <img
             className="add"
             onClick={() => addToCart(id)}
@@ -38,7 +37,9 @@ const FoodItem = ({ id, name, price, description, image }) => {
               src={assets.remove_icon_red}
               alt=""
             />
-            <p>{cartItems[id]}</p>
+
+            <p>{cartItems?.[id]}</p>
+
             <img
               onClick={() => addToCart(id)}
               src={assets.add_icon_green}
@@ -47,12 +48,15 @@ const FoodItem = ({ id, name, price, description, image }) => {
           </div>
         )}
       </div>
+
       <div className="food-item-info">
         <div className="food-item-name-rating">
           <p>{name}</p>
           <img src={assets.rating_starts} alt="" />
         </div>
+
         <p className="food-item-desc">{description}</p>
+
         <p className="food-item-price">₹{price}</p>
       </div>
     </div>
