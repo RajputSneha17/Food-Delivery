@@ -8,7 +8,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const url = "https://food-delivery-5nzz.onrender.com";
+  const url = "https://food-delivery-v9dq.onrender.com";
   return (
     <>
       <ToastContainer />
